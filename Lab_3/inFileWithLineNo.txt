@@ -1,0 +1,7 @@
+1. Hello Friends.
+2. 
+3. This is compiler construction lab.
+4. 
+5. C programming is real fun.
+6. 
+7. Have a nice day.
