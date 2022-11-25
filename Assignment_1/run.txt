@@ -1,0 +1,3 @@
+gcc task.c -o task
+
+.\task input.c removeBlankLines1.txt removeComments.txt removeBlankLines2.txt
