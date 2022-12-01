@@ -1,3 +1,10 @@
+/*
+    Name: Gulraiz Noor Bari
+    Roll No: 231-525536
+    COMP-451 (Compiler Construction)
+    Section: A
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,24 +15,25 @@ void macroExpansion();
 
 void main(int argc, char *argv[])
 {
-    if (argc != 5)
+    if (argc != 2)
     {
         printf("Invalid Arguments.\n");
         exit(0);
     }
 
-    FILE *fp = fopen(argv[1], "r");
+    FILE *fp = fopen("input.c", "r");
     char line[128] = "";
     while (fgets(line, sizeof(line), fp) != NULL)
     {
         fputs(line, stdout);
     }
+    fputs("\n", stdout);
     fclose(fp);
 
-    removeBlankLines(argv[1], argv[2]);
-    removeComments(argv[2], argv[3]);
-    removeBlankLines(argv[3], argv[4]);
-    macroExpansion(argv[4]);
+    removeBlankLines("input.c", "removeBlankLines1.txt");
+    removeComments("removeBlankLines1.txt", "removeComments.txt");
+    removeBlankLines("removeComments.txt", "removeBlankLines2.txt");
+    macroExpansion("removeBlankLines2.txt");
 
     exit(0);
 }
@@ -95,4 +103,72 @@ void macroExpansion(char *inputFile)
 {
     FILE *fp = fopen(inputFile, "r");
     FILE *outfp = fopen("output.c", "w");
+
+    char line[128] = "";
+    char macroLine[500] = "";
+    char *c;
+    while ((c = fgets(line, sizeof(line), fp)) != NULL)
+    {
+        for (int i = 0; i < strlen(line); i++)
+        {
+            if (c[i] == '#')
+            {
+                while (c[i + 1] == ' ')
+                {
+                    i++;
+                }
+                if (c[i + 1] == 'd' && c[i + 2] == 'e' && c[i + 3] == 'f')
+                {
+                    char *token = strtok(c, " ");
+                    token = strtok(NULL, " ");
+                    char *macroName = token;
+                    token = strtok(NULL, " ");
+                    char *macroValue = token;
+                    // printf("Macro Name: %s\n", macroName);
+                    // printf("Macro Value: %s", macroValue);
+                    while (c[i] != '\n' && c[i] != '\0')
+                    {
+                        i++;
+                    }
+                    while (fgets(macroLine, sizeof(macroLine), fp) != NULL)
+                    {
+                        if (strstr(macroLine, macroName) != NULL)
+                        {
+                            char *token = strtok(macroLine, " ");
+                            while (token != NULL)
+                            {
+                                if (strcmp(token, macroName) == 0)
+                                {
+                                    macroName = macroValue;
+                                    fputs(macroValue, outfp);
+                                    fputs(" ", outfp);
+                                    fputs(macroName, stdout);
+                                }
+                                else
+                                {
+                                    fputs(token, outfp);
+                                    fputs(token, stdout);
+                                }
+                                token = strtok(NULL, " ");
+                            }
+                        }
+                        else
+                        {
+                            fputs(macroLine, outfp);
+                            fputs(macroLine, stdout);
+                        }
+                    }
+                }
+                else
+                {
+                    fputs(c, outfp);
+                    fputs(c, stdout);
+                }
+            }
+        }
+        fputs(c, outfp);
+        fputs(c, stdout);
+    }
+    fclose(fp);
+    fclose(outfp);
 }
