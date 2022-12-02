@@ -21,16 +21,18 @@ void main(int argc, char *argv[])
         exit(0);
     }
 
-    FILE *fp = fopen("input.c", "r");
+    FILE *fp = fopen(argv[1], "r");
     char line[128] = "";
     while (fgets(line, sizeof(line), fp) != NULL)
     {
         fputs(line, stdout);
     }
     fputs("\n", stdout);
+    fputs("\n", stdout);
+    fputs("\n", stdout);
     fclose(fp);
 
-    removeBlankLines("input.c", "removeBlankLines1.txt");
+    removeBlankLines(argv[1], "removeBlankLines1.txt");
     removeComments("removeBlankLines1.txt", "removeComments.txt");
     removeBlankLines("removeComments.txt", "removeBlankLines2.txt");
     macroExpansion("removeBlankLines2.txt");
@@ -62,6 +64,7 @@ void removeComments(char *inputFile, char *outputFile)
     FILE *fp1 = fopen(outputFile, "w");
     char *c;
     char line[128] = "";
+
     while ((c = fgets(line, sizeof(line), fp)) != NULL)
     {
         for (int i = 0; i < strlen(line); i++)
@@ -107,6 +110,10 @@ void macroExpansion(char *inputFile)
     char line[128] = "";
     char macroLine[500] = "";
     char *c;
+    char *b;
+    char *x;
+    int z = 0;
+    int macroFlag = 0;
     while ((c = fgets(line, sizeof(line), fp)) != NULL)
     {
         for (int i = 0; i < strlen(line); i++)
@@ -119,18 +126,17 @@ void macroExpansion(char *inputFile)
                 }
                 if (c[i + 1] == 'd' && c[i + 2] == 'e' && c[i + 3] == 'f')
                 {
+                    macroFlag = 1;
                     char *token = strtok(c, " ");
                     token = strtok(NULL, " ");
                     char *macroName = token;
                     token = strtok(NULL, " ");
                     char *macroValue = token;
+                    macroValue[strlen(macroValue) - 1] = '\0';
                     // printf("Macro Name: %s\n", macroName);
                     // printf("Macro Value: %s", macroValue);
-                    while (c[i] != '\n' && c[i] != '\0')
-                    {
-                        i++;
-                    }
-                    while (fgets(macroLine, sizeof(macroLine), fp) != NULL)
+
+                    while ((b = fgets(macroLine, sizeof(macroLine), fp)) != NULL)
                     {
                         if (strstr(macroLine, macroName) != NULL)
                         {
@@ -139,10 +145,8 @@ void macroExpansion(char *inputFile)
                             {
                                 if (strcmp(token, macroName) == 0)
                                 {
-                                    macroName = macroValue;
                                     fputs(macroValue, outfp);
-                                    fputs(" ", outfp);
-                                    fputs(macroName, stdout);
+                                    fputs(macroValue, stdout);
                                 }
                                 else
                                 {
@@ -166,9 +170,8 @@ void macroExpansion(char *inputFile)
                 }
             }
         }
-        fputs(c, outfp);
-        fputs(c, stdout);
     }
+    // printf("\nMacro Flag: %s", macroFlag == 1 ? "True" : "False");
     fclose(fp);
     fclose(outfp);
 }
