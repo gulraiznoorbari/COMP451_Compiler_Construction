@@ -57,33 +57,33 @@ void main(int argc, char *argv[])
     while (fgets(line, MAX_LINE_LENGTH, input_file) != NULL)
     {
         // Split the line into fields
-        char *mnemonic = strtok(line, ", ");
-        char *operand1 = strtok(NULL, ", ");
-        char *operand2 = strtok(NULL, ", ");
-        char *operand3 = strtok(NULL, ", ");
+        char *operand = strtok(line, ", ");
+        char *reg1 = strtok(NULL, ", ");
+        char *reg2 = strtok(NULL, ", ");
+        char *reg3 = strtok(NULL, ", ");
 
-        if (strcmp(mnemonic, "add") == 0)
+        if (strcmp(operand, "add") == 0)
         {
             int rd;
             int rs;
             int rt;
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand1, regs[j].reg) == 0)
+                if (strcmp(reg1, regs[j].reg) == 0)
                 {
                     rd = regs[j].value;
                 }
             }
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand2, regs[j].reg) == 0)
+                if (strcmp(reg2, regs[j].reg) == 0)
                 {
                     rs = regs[j].value;
                 }
             }
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand3, regs[j].reg) == 0)
+                if (strcmp(reg3, regs[j].reg) == 0)
                 {
                     rt = regs[j].value;
                 }
@@ -92,28 +92,28 @@ void main(int argc, char *argv[])
             decimalToBinary(machine_code);
             printf("\n");
         }
-        if (strcmp(mnemonic, "and") == 0)
+        if (strcmp(operand, "and") == 0)
         {
             int rd;
             int rs;
             int rt;
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand1, regs[j].reg) == 0)
+                if (strcmp(reg1, regs[j].reg) == 0)
                 {
                     rd = regs[j].value;
                 }
             }
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand2, regs[j].reg) == 0)
+                if (strcmp(reg2, regs[j].reg) == 0)
                 {
                     rs = regs[j].value;
                 }
             }
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand3, regs[j].reg) == 0)
+                if (strcmp(reg3, regs[j].reg) == 0)
                 {
                     rt = regs[j].value;
                 }
@@ -122,28 +122,28 @@ void main(int argc, char *argv[])
             decimalToBinary(machine_code);
             printf("\n");
         }
-        if (strcmp(mnemonic, "or") == 0)
+        if (strcmp(operand, "or") == 0)
         {
             int rd;
             int rs;
             int rt;
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand1, regs[j].reg) == 0)
+                if (strcmp(reg1, regs[j].reg) == 0)
                 {
                     rd = regs[j].value;
                 }
             }
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand2, regs[j].reg) == 0)
+                if (strcmp(reg2, regs[j].reg) == 0)
                 {
                     rs = regs[j].value;
                 }
             }
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand3, regs[j].reg) == 0)
+                if (strcmp(reg3, regs[j].reg) == 0)
                 {
                     rt = regs[j].value;
                 }
@@ -152,21 +152,21 @@ void main(int argc, char *argv[])
             decimalToBinary(machine_code);
             printf("\n");
         }
-        if (strcmp(mnemonic, "addi") == 0)
+        if (strcmp(operand, "addi") == 0)
         {
             int rt;
             int rs;
-            int immediate = atoi(operand3);
+            int immediate = atoi(reg3);
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand1, regs[j].reg) == 0)
+                if (strcmp(reg1, regs[j].reg) == 0)
                 {
                     rt = regs[j].value;
                 }
             }
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand2, regs[j].reg) == 0)
+                if (strcmp(reg2, regs[j].reg) == 0)
                 {
                     rs = regs[j].value;
                 }
@@ -175,21 +175,21 @@ void main(int argc, char *argv[])
             decimalToBinary(machine_code);
             printf("\n");
         }
-        if (strcmp(mnemonic, "andi") == 0)
+        if (strcmp(operand, "andi") == 0)
         {
             int rt;
             int rs;
-            int immediate = atoi(operand3);
+            int immediate = atoi(reg3);
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand1, regs[j].reg) == 0)
+                if (strcmp(reg1, regs[j].reg) == 0)
                 {
                     rt = regs[j].value;
                 }
             }
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand2, regs[j].reg) == 0)
+                if (strcmp(reg2, regs[j].reg) == 0)
                 {
                     rs = regs[j].value;
                 }
@@ -198,21 +198,21 @@ void main(int argc, char *argv[])
             decimalToBinary(machine_code);
             printf("\n");
         }
-        if (strcmp(mnemonic, "ori") == 0)
+        if (strcmp(operand, "ori") == 0)
         {
             int rt;
             int rs;
-            int immediate = atoi(operand3);
+            int immediate = atoi(reg3);
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand1, regs[j].reg) == 0)
+                if (strcmp(reg1, regs[j].reg) == 0)
                 {
                     rt = regs[j].value;
                 }
             }
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand2, regs[j].reg) == 0)
+                if (strcmp(reg2, regs[j].reg) == 0)
                 {
                     rs = regs[j].value;
                 }
@@ -221,21 +221,21 @@ void main(int argc, char *argv[])
             decimalToBinary(machine_code);
             printf("\n");
         }
-        if (strcmp(mnemonic, "sw") == 0)
+        if (strcmp(operand, "sw") == 0)
         {
             int rt;
             int rs;
-            int offset = atoi(operand2);
+            int offset = atoi(reg2);
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand1, regs[j].reg) == 0)
+                if (strcmp(reg1, regs[j].reg) == 0)
                 {
                     rt = regs[j].value;
                 }
             }
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand2, regs[j].reg) == 0)
+                if (strcmp(reg2, regs[j].reg) == 0)
                 {
                     rs = regs[j].value;
                 }
@@ -244,17 +244,17 @@ void main(int argc, char *argv[])
             decimalToBinary(machine_code);
             printf("\n");
         }
-        if (strcmp(mnemonic, "lw") == 0)
+        if (strcmp(operand, "lw") == 0)
         {
             int rt;
             int rs;
-            int offset = atoi(operand2);
-            char *token = strtok(operand2, "(");
+            int offset = atoi(reg2);
+            char *token = strtok(reg2, "(");
             char *token1 = strtok(NULL, ")");
 
             for (int j = 0; j < NUM_OF_REGS; j++)
             {
-                if (strcmp(operand1, regs[j].reg) == 0)
+                if (strcmp(reg1, regs[j].reg) == 0)
                 {
                     rt = regs[j].value;
                 }
